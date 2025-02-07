@@ -522,7 +522,7 @@ namespace AssetStudioGUI
             StreamWriter writer = new StreamWriter(filePath);
             try
             {
-                writer.WriteLine("Name,Container,Source,Type,FormatDetail,Size,Size(KB)");
+                writer.WriteLine("Name,Container,Source,Type,FormatDetail,Size,Size(KB),Size(MB)");
                 foreach (AssetItem asset in toExportAssets) 
                 {
                     string formatDetail = "";
@@ -532,7 +532,7 @@ namespace AssetStudioGUI
                         formatDetail = tex.m_TextureFormat.ToString();
                     }
                     writer.WriteLine($"{asset.Text},{asset.Container},{asset.SourceFile.originalPath},{asset.TypeString},{formatDetail}," +
-                        $"{asset.FullSize},{asset.FullSize / 1024f:f2}");
+                        $"{asset.FullSize},{asset.FullSize / 1024f:f2},{asset.FullSize / 1048576f}");
                 }
             }
             catch (Exception ex)
