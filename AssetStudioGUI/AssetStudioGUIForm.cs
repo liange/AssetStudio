@@ -1599,7 +1599,7 @@ namespace AssetStudioGUI
                             toExportAssets = visibleAssets;
                             break;
                     }
-                    Studio.ExportAssetsList(saveFolderDialog.Folder, toExportAssets, ExportListType.XML);
+                    Studio.ExportAssetsList(saveFolderDialog.Folder, toExportAssets, ExportListType.CSV);
                 }
             }
             else

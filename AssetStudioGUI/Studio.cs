@@ -29,7 +29,8 @@ namespace AssetStudioGUI
 
     internal enum ExportListType
     {
-        XML
+        XML,
+        CSV,
     }
 
     internal static class Studio
@@ -495,6 +496,11 @@ namespace AssetStudioGUI
                         doc.Save(filename);
 
                         break;
+                    case ExportListType.CSV:
+                        {
+                            ExportAssetsList_CSV(savePath, toExportAssets);
+                        }
+                        break;
                 }
 
                 var statusText = $"Finished exporting asset list with {toExportAssets.Count()} items.";
@@ -506,6 +512,37 @@ namespace AssetStudioGUI
                     OpenFolderInExplorer(savePath);
                 }
             });
+        }
+
+        public static void ExportAssetsList_CSV(string savePath, List<AssetItem> toExportAssets)
+        {
+            string fileName = string.Format("assets_{0}.csv", DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss"));
+            var filePath = Path.Combine(savePath, fileName);
+
+            StreamWriter writer = new StreamWriter(filePath);
+            try
+            {
+                writer.WriteLine("Name,Container,Source,Type,FormatDetail,Size,Size(KB)");
+                foreach (AssetItem asset in toExportAssets) 
+                {
+                    string formatDetail = "";
+                    if(asset.Asset is Texture2D)
+                    {
+                        var tex = asset.Asset as Texture2D;
+                        formatDetail = tex.m_TextureFormat.ToString();
+                    }
+                    writer.WriteLine($"{asset.Text},{asset.Container},{asset.SourceFile.originalPath},{asset.TypeString},{formatDetail}," +
+                        $"{asset.FullSize},{asset.FullSize / 1024f:f2}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally 
+            {
+                writer.Close();
+            }
         }
 
         public static void ExportSplitObjects(string savePath, TreeNodeCollection nodes)
