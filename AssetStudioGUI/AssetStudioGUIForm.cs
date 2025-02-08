@@ -1467,17 +1467,17 @@ namespace AssetStudioGUI
 
         private void toolStripMenuItem11_Click(object sender, EventArgs e)
         {
-            ExportAssetsList(ExportFilter.All);
+            ExportAssetsList(ExportFilter.All, ExportListType.XML);
         }
 
         private void toolStripMenuItem12_Click(object sender, EventArgs e)
         {
-            ExportAssetsList(ExportFilter.Selected);
+            ExportAssetsList(ExportFilter.Selected, ExportListType.XML);
         }
 
         private void toolStripMenuItem13_Click(object sender, EventArgs e)
         {
-            ExportAssetsList(ExportFilter.Filtered);
+            ExportAssetsList(ExportFilter.Filtered, ExportListType.XML);
         }
 
         private void exportAllObjectssplitToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1574,7 +1574,7 @@ namespace AssetStudioGUI
             }
         }
 
-        private void ExportAssetsList(ExportFilter type)
+        private void ExportAssetsList(ExportFilter type, ExportListType exportListType)
         {
             // XXX: Only exporting as XML for now, but would JSON(/CSV/other) be useful too?
 
@@ -1599,7 +1599,7 @@ namespace AssetStudioGUI
                             toExportAssets = visibleAssets;
                             break;
                     }
-                    Studio.ExportAssetsList(saveFolderDialog.Folder, toExportAssets, ExportListType.CSV);
+                    Studio.ExportAssetsList(saveFolderDialog.Folder, toExportAssets, exportListType);
                 }
             }
             else
@@ -2047,6 +2047,21 @@ namespace AssetStudioGUI
         private void toolStripMenuItem15_Click(object sender, EventArgs e)
         {
             logger.ShowErrorMessage = toolStripMenuItem15.Checked;
+        }
+
+        private void toolStripMenuItem17_Click(object sender, EventArgs e)
+        {
+            ExportAssetsList(ExportFilter.All, ExportListType.CSV);
+        }
+
+        private void toolStripMenuItem18_Click(object sender, EventArgs e)
+        {
+            ExportAssetsList(ExportFilter.Selected, ExportListType.CSV);
+        }
+
+        private void toolStripMenuItem19_Click(object sender, EventArgs e)
+        {
+            ExportAssetsList(ExportFilter.Filtered, ExportListType.CSV);
         }
 
         private void glControl1_MouseWheel(object sender, MouseEventArgs e)
